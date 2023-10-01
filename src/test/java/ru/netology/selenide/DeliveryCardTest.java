@@ -5,11 +5,10 @@ import org.openqa.selenium.Keys;
 
 import java.time.Duration;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+
+import static com.codeborne.selenide.Selenide.*;
 
 public class DeliveryCardTest {
     public String planingDate(int choiceDays, String pattern) {
@@ -18,9 +17,10 @@ public class DeliveryCardTest {
     @org.junit.jupiter.api.Test
     void shouldTestIfSuccess() {
         open("http://localhost:9999");
+        
+        $("[data-test-id=city] input").setValue("Ни");
 
-        // Заполняем город и имя
-        $("[data-test-id=city] input").setValue("Нижний Новгород");
+        $$(".menu-item").find(Condition.exactText("Нижний Новгород")).click();
 
         String futureDate = planingDate(4, "dd.MM.yyyy");
         $("[data-test-id=date] input").sendKeys(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE);
